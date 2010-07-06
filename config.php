@@ -19,7 +19,7 @@ if (!isset($index)) {
 	$config['local'] = array('host'=>'localhost', 
 		'port'=>3306, 
 		'user'=>'web', 
-		'pass'=>'kloudweb', 
+		'pass'=>'****', 
 		'db'=>'fbb_home'
 		);
 	/*
