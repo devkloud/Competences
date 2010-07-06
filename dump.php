@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 // Configuration et connexion MySql
 $index = true;

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // Redéfinition des variables
 $designation = array();
 $categorie 	 = array();

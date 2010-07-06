@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // Pas d'accès direct
 if (!isset($index)) {
 	die();
