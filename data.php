@@ -20,6 +20,7 @@ if (!isset($index)) {
 	RIGHT JOIN users ON users.id=competences_users.users_id
 	LEFT JOIN competences_designation ON competences_designation.id=competences_users.designation_id
 	LEFT JOIN competences_categories ON competences_categories.id=competences_designation.categories_id
+	WHERE users.id != 1
 	ORDER BY users.id,competences_categories.nom ASC"); // Récupération des infos
 	$noms->setFetchMode(PDO::FETCH_OBJ); // Transformation en objet
 	$donnees = $noms->fetchAll(); // Traitement de l'objet
