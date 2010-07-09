@@ -7,53 +7,22 @@ if (!isset($index)) {
 	require_once('config.php');
 	
 	// Définition des variables
-	$designation = array();
-	$categorie   = array();
-	$valeur		 = array();
-	$user		 = array();
-	$nbr_des	 = 0;
+	$donnees = array();
 	
-	// Récupération des désignations et leur nombre
-	$noms = $connexion->query("SELECT * FROM competences_designation ORDER BY id ASC"); // Récupération des infos
+	// Récupération des désignation
+	$noms = $connexion->query("SELECT users.id,
+	users.username,
+	competences_categories.nom AS categorie,
+	competences_designation.designation,
+	competences_users.note,
+	competences_users.commentaire
+	FROM competences_users
+	RIGHT JOIN users ON users.id=competences_users.users_id
+	LEFT JOIN competences_designation ON competences_designation.id=competences_users.designation_id
+	LEFT JOIN competences_categories ON competences_categories.id=competences_designation.categories_id
+	ORDER BY users.id,competences_categories.nom ASC"); // Récupération des infos
 	$noms->setFetchMode(PDO::FETCH_OBJ); // Transformation en objet
-	while($ligne = $noms->fetch()) // Traitement de l'objet
-	{
-	        $designation[$ligne->id] = array('categories_id' => $ligne->categories_id,
-											 'designation'   => $ligne->designation
-											 );
-			$nbr_des++;
-	}
-	$noms->closeCursor(); // Fermeture
-	
-	// Récupération des catégories
-	$noms = $connexion->query("SELECT * FROM competences_categories ORDER BY id ASC"); // Récupération des infos
-	$noms->setFetchMode(PDO::FETCH_OBJ); // Transformation en objet
-	while($ligne = $noms->fetch()) // Traitement de l'objet
-	{
-	        $categorie[$ligne->id] = array('nom' => $ligne->nom);
-	}
-	$noms->closeCursor(); // Fermeture
-	
-	// Récupération des valeurs
-	$noms = $connexion->query("SELECT * FROM competences_users ORDER BY users_id ASC"); // Récupération des infos
-	$noms->setFetchMode(PDO::FETCH_OBJ); // Transformation en objet
-	while($ligne = $noms->fetch()) // Traitement de l'objet
-	{
-	        $valeur[$ligne->id] = array('users_id' => $ligne->users_id,
-										'designation_id' => $ligne->designation_id,
-										'note' => $ligne->note,
-										'commentaire' => $ligne->commentaire
-										);
-	}
-	$noms->closeCursor(); // Fermeture
-	
-	// Récupération des users
-	$noms = $connexion->query("SELECT * FROM users ORDER BY id ASC"); // Récupération des infos
-	$noms->setFetchMode(PDO::FETCH_OBJ); // Transformation en objet
-	while($ligne = $noms->fetch()) // Traitement de l'objet
-	{
-	        $user[$ligne->id] = array('username' => $ligne->username);
-	}
+	$donnees = $noms->fetchAll(); // Traitement de l'objet
 	$noms->closeCursor(); // Fermeture
 }
 ?>
