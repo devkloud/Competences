@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <buildpath>
-	<buildpathentry including=".buildpath|.git/|.gitignore|.project|.settings/" kind="src" path=""/>
-	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/home"/>
 </buildpath>

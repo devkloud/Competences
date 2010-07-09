@@ -14,7 +14,7 @@ if (!isset($index)) {
 	$nbr_des	 = 0;
 	
 	// Récupération des désignations et leur nombre
-	$noms=$connexion->query("SELECT * FROM competences_designation ORDER BY id ASC"); // Récupération des infos
+	$noms = $connexion->query("SELECT * FROM competences_designation ORDER BY id ASC"); // Récupération des infos
 	$noms->setFetchMode(PDO::FETCH_OBJ); // Transformation en objet
 	while($ligne = $noms->fetch()) // Traitement de l'objet
 	{
@@ -26,7 +26,7 @@ if (!isset($index)) {
 	$noms->closeCursor(); // Fermeture
 	
 	// Récupération des catégories
-	$noms=$connexion->query("SELECT * FROM competences_categories ORDER BY id ASC"); // Récupération des infos
+	$noms = $connexion->query("SELECT * FROM competences_categories ORDER BY id ASC"); // Récupération des infos
 	$noms->setFetchMode(PDO::FETCH_OBJ); // Transformation en objet
 	while($ligne = $noms->fetch()) // Traitement de l'objet
 	{
@@ -35,7 +35,7 @@ if (!isset($index)) {
 	$noms->closeCursor(); // Fermeture
 	
 	// Récupération des valeurs
-	$noms=$connexion->query("SELECT * FROM competences_users ORDER BY users_id ASC"); // Récupération des infos
+	$noms = $connexion->query("SELECT * FROM competences_users ORDER BY users_id ASC"); // Récupération des infos
 	$noms->setFetchMode(PDO::FETCH_OBJ); // Transformation en objet
 	while($ligne = $noms->fetch()) // Traitement de l'objet
 	{
@@ -48,7 +48,7 @@ if (!isset($index)) {
 	$noms->closeCursor(); // Fermeture
 	
 	// Récupération des users
-	$noms=$connexion->query("SELECT * FROM users ORDER BY id ASC"); // Récupération des infos
+	$noms = $connexion->query("SELECT * FROM users ORDER BY id ASC"); // Récupération des infos
 	$noms->setFetchMode(PDO::FETCH_OBJ); // Transformation en objet
 	while($ligne = $noms->fetch()) // Traitement de l'objet
 	{
