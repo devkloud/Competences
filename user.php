@@ -48,11 +48,11 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <title>Gestion des compétences</title>
-		<script src='http://jquery.com/src/jquery-latest.js' type="text/javascript" language="javascript">
+		<script src='js/jquery.js' type="text/javascript" language="javascript">
         </script>
-        <script src='http://jquery-star-rating-plugin.googlecode.com/svn/trunk/jquery.rating.js' type="text/javascript" language="javascript">
+        <script src='js/jquery.rating.js' type="text/javascript" language="javascript">
         </script>
-        <link href='http://jquery-star-rating-plugin.googlecode.com/svn/trunk/jquery.rating.css' type="text/css" rel="stylesheet"/>
+        <link href='css/jquery.rating.css' type="text/css" rel="stylesheet"/>
     </head>
     <body>
         <div id="container">
@@ -71,11 +71,11 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
 					<?endif; //endGestion des catégories ?>
 								<tr>
 									<td><?= $d->designation ?></td>
-									<td><? for($i = 1; $i<6; $i++): ?>
-											<input type="radio" name="<?= $d->designation ?>" value="<?= $i ?>" class="star" />
-										<? endfor; ?>
+									<td><? for($i = 1; $i<6; $i++): //Star-rating ?>
+											<input type="radio" name="<?= $d->designation ?>" value="<?= $i ?>" class="star" <? $note = note($d->designation, $user); if($note != FALSE && $note == $i): ?>checked="checked"<? endif; ?> />
+										<? endfor; //endStar-rating ?>
 									</td>
-									<td><input type="text" name="<?= $d->designation.'.commentaire' ?>" /></td>
+									<td><input type="text" name="<?= $d->designation.'.commentaire' ?>" value="<?= commentaire($d->designation, $user) ?>" /></td>
 								</tr>
 					<? $cat = $d->categorie; ?>
 				<? endforeach; ?>
@@ -83,7 +83,6 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
 						</fieldset>
 				<input type="submit" name="submit" value="Envoyer" />
         	</form>
-            <pre><?php print_r($user); print_r($donnees); ?></pre>
         </div>
     </body>
 </html>
