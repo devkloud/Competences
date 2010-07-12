@@ -48,7 +48,7 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <title>Gestion des compétences</title>
-		<script src='js/jquery.js' type="text/javascript" language="javascript">
+		<script src='js/jquery-1.4.2.min.js' type="text/javascript" language="javascript">
         </script>
         <script src='js/jquery.rating.js' type="text/javascript" language="javascript">
         </script>

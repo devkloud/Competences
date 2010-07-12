@@ -13,7 +13,7 @@ require_once ('data.php');
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <title>Compétences</title>
 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
-<script type="text/javascript" src="http://datatables.net/release-datatables/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.2.custom.min.js"></script>
 <link rel="stylesheet" href="css/hot-sneaks/jquery-ui-1.8.2.custom.css" type="text/css" media="screen" />
 <style type="text/css" media="screen">
