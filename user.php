@@ -70,7 +70,7 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
 								<tr>
 									<td><?= $d->designation ?></td>
 									<td><? for($i = 1; $i<6; $i++): ?>
-											<input type="radio" name="<?= $d->designation ?>" class="star" />
+											<input type="radio" name="<?= $d->designation ?>" value="<?= $i ?>" class="star" />
 										<? endfor; ?>
 									</td>
 								</tr>
