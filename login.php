@@ -45,9 +45,8 @@ if ($pun_user['is_guest'] != 1) { // L'utilisateur est déjà connecté
             </fieldset>
             <?php } else { // Confirmation de connexion ?>
             <p>
-                Vous êtes bien connectés avec le nom 
-                <?php echo $pun_user['username']; ?>
-                !
+                Vous êtes bien connectés avec le nom <?= $pun_user['username'] ?>!
+				<a href="user.php">Ajouter vos compétences ?</a>
             </p>
             <?php } ?>
         </div>
