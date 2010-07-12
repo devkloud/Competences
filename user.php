@@ -5,6 +5,8 @@ $index = true;
 define('PUN_ROOT', '../home/');
 require PUN_ROOT.'include/common.php';
 
+require 'functions.php';
+
 if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
     header('Location: login.php');
 } else {
@@ -73,6 +75,7 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
 											<input type="radio" name="<?= $d->designation ?>" value="<?= $i ?>" class="star" />
 										<? endfor; ?>
 									</td>
+									<td><input type="text" name="<?= $d->designation.'.commentaire' ?>" /></td>
 								</tr>
 					<? $cat = $d->categorie; ?>
 				<? endforeach; ?>
