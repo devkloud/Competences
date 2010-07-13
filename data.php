@@ -1,16 +1,16 @@
 ﻿<?php
 // Pas d'accès direct
 if (!isset($index)) {
-	die();
+  die();
 } else {
-	// Configuration et connexion MySql
-	require_once('config.php');
-	
-	// Définition des variables
-	$donnees = array();
-	
-	// Récupération des désignation
-	$noms = $connexion->query("SELECT users.id,
+  // Configuration et connexion MySql
+  require_once('config.php');
+  
+  // Définition des variables
+  $donnees = array();
+  
+  // Récupération des désignation
+  $noms = $connexion->query("SELECT users.id,
 	users.username,
 	competences_categories.nom AS categorie,
 	competences_designation.designation,
@@ -22,8 +22,8 @@ if (!isset($index)) {
 	LEFT JOIN `competences_categories` ON competences_categories.id=competences_designation.categories_id
 	WHERE users.id != 1
 	ORDER BY users.id,competences_categories.nom ASC"); // Récupération des infos
-	$noms->setFetchMode(PDO::FETCH_OBJ); // Transformation en objet
-	$donnees = $noms->fetchAll(); // Traitement de l'objet
-	$noms->closeCursor(); // Fermeture
+  $noms->setFetchMode(PDO::FETCH_OBJ); // Transformation en objet
+  $donnees = $noms->fetchAll(); // Traitement de l'objet
+  $noms->closeCursor(); // Fermeture
 }
 ?>

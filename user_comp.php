@@ -13,7 +13,7 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
     
     // Définition des variables
     $donnees = array();
-	$user = array();
+    $user = array();
     
     // Récupération des compétences de l'utilisateur
     $noms = $connexion->query("SELECT users.id,
@@ -40,6 +40,37 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
     $noms->setFetchMode(PDO::FETCH_OBJ); // Transformation en objet
     $donnees = $noms->fetchAll(); // Traitement de l'objet
     $noms->closeCursor(); // Fermeture
+
+  // Récupération des désignation
+  $noms = $connexion->query("SELECT competences_designation.designation,
+	competences_users.designation_id
+	FROM `competences_users`
+	LEFT JOIN `competences_designation` ON competences_designation.id=competences_users.designation_id
+	ORDER BY competences_users.designation_id ASC"); // Récupération des infos
+  $noms->setFetchMode(PDO::FETCH_OBJ); // Transformation en objet
+  $designations = $noms->fetchAll(); // Traitement de l'objet
+  $noms->closeCursor(); // Fermeture
+
+  require('functions.php');
+  
+  // Création du tableau des donnees
+  $post = array();
+  foreach($designations as $d) {
+    if(isset($_POST[$d->designation])) {
+        $post[] = array('user' => $pun_user['id'],
+                        'designation' => $donnees->designation_id,
+                        'note' => $_POST[$d->designation],
+                        'commentaire' => $_POST[$d->designation.'_commentaire']);
+      } else {
+        $post[] = array('user' => $pun_user['id'],
+                        'designation' => $donnees->designation_id,
+                        'note' => 0,
+                        'commentaire' => $_POST[$d->designation.'_commentaire']);
+      }
+  }
+  
+  // Envoi en bdd
+  update_user($post);
 ?>
  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
