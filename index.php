@@ -1,4 +1,8 @@
 ﻿<?php
+// Inclusion de fluxbb
+define('PUN_ROOT', '../home/');
+require PUN_ROOT.'include/common.php';
+
 // Redéfinition des variables
 $donnees = array();
 $cat_indent = 0;
@@ -27,11 +31,15 @@ tr.odd {
 </head>
 <body>
 <div id="container">
-	<a href="login.php" title="Connexion">Connectez-vous pour ajouter ou modifier vos compétences.<a>
+	<ul>
+		<li><a href="login.php" title="Connexion">Connectez-vous pour ajouter ou modifier vos compétences.<a></li>
+		<? if ($pun_user['group_id'] == 1 || $pun_user['group_id'] == 2 || $pun_user['group_id'] == 11): ?>
+			<li><a href="categorie.php" title="Catégories">Gérer les catégories</a></li>
+		<? endif; ?>
+	</ul>
 <table id="competences">
 	<thead>
 		<tr>
-			<th>ID</th>
 			<th>Username</th>
 			<th>Catégorie</th>
 			<th>Désignation</th>
@@ -42,7 +50,6 @@ tr.odd {
 	<tbody>
 	<? foreach ($donnees as $i) : ?>
 		<tr>
-			<td><?= $i->id ?></td>
 			<td><?= $i->username ?></td>
 			<td><?= $i->categorie ?></td>
 			<td><?= $i->designation ?></td>
