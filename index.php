@@ -27,6 +27,7 @@ tr.odd {
 </head>
 <body>
 <div id="container">
+	<a href="login.php" title="Connexion">Connectez-vous pour ajouter ou modifier vos compétences.<a>
 <table id="competences">
 	<thead>
 		<tr>

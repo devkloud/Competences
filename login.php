@@ -4,7 +4,8 @@ define('PUN_ROOT', '../home/');
 require PUN_ROOT.'include/common.php';
 
 if ($pun_user['is_guest'] != 1) { // L'utilisateur est déjà connecté
-    die('Vous êtes déja connectés sous le nom de '.$pun_user['username'].' !');
+    header('Location: user.php');
+	exit;
 } elseif (isset($_POST['user']) && isset($_POST['pass'])) { // Forumlaire correctement envoyé, on passe à la suite
     // Authentification
     $username = pun_trim($_POST['user']);
