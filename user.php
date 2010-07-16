@@ -72,10 +72,10 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
 								<tr>
 									<td><?= $d->designation ?></td>
 									<td><? for($i = 1; $i<6; $i++): //Star-rating ?>
-											<input type="radio" name="<?= $d->designation ?>" value="<?= $i ?>" class="star" <? $note = note($d->designation, $user); if($note != FALSE && $note == $i): ?>checked="checked"<? endif; ?> />
+											<input type="radio" name="<?= $d->designation ?>" value="<?= $i ?>" class="star" <? $note = note($d->designation); if($note != FALSE && $note == $i): ?>checked="checked"<? endif; ?> />
 										<? endfor; //endStar-rating ?>
 									</td>
-									<td><input type="text" name="<?= $d->designation.'.commentaire' ?>" value="<?= commentaire($d->designation, $user) ?>" /></td>
+									<td><input type="text" name="<?= $d->designation.'.commentaire' ?>" value="<?= commentaire($d->designation) ?>" /></td>
 								</tr>
 					<? $cat = $d->categorie; ?>
 				<? endforeach; ?>
