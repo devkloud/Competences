@@ -133,7 +133,7 @@ if ($action == 'edit' && isset($id) && isset($_POST['submit']) && isset($_POST['
 					<fieldset>
 						<legend>Nouvelle catégorie</legend>
 						<input type="text" name="cat" />
-						<input type="submit" name="submit" value="Editer" />
+						<input type="submit" name="submit" value="Créer" />
 					</fieldset>
 				</form>
 				<a href="?a=index">Retour aux catégories</a>
@@ -147,7 +147,7 @@ if ($action == 'edit' && isset($id) && isset($_POST['submit']) && isset($_POST['
 					<fieldset>
 						<legend>Edition de catégorie</legend>
 						<input type="text" name="cat" value="<?= $nom[0] ?>" />
-						<input type="submit" name="submit" value="Créer" />
+						<input type="submit" name="submit" value="Editer" />
 					</fieldset>
 				</form>
 				<a href="?a=index">Retour aux catégories</a>
