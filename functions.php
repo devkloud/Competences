@@ -30,37 +30,24 @@ function note($des) {
 /**
  * Envoi des données utilisateur en base de données
  * @param array $donnees
- * @return array $errors
  */
 function update_user($donnees) {
     global $connexion;
-    $errors = array();
     foreach ($donnees as $d) {
-        try {
-            $update = $connexion->exec("UPDATE `competences_users`(users_id, designation_id, note, commentaire) 
+        $update = $connexion->exec("UPDATE `competences_users` SET
+									note=".$connexion->quote($d['note'], PDO::PARAM_INT).",
+									commentaire=".$connexion->quote($d['commentaire'], PDO::PARAM_STR)."
+									WHERE users_id=".$connexion->quote($d['user'], PDO::PARAM_INT)." 
+									AND designation_id=".$connexion->quote($d['designation'], PDO::PARAM_INT)."
+									");
+        if ($update == 0) {
+            $create = $connexion->exec("INSERT INTO `competences_users`(users_id, designation_id, note, commentaire) 
 										VALUES(".$connexion->quote($d['user'], PDO::PARAM_INT).", 
 										".$connexion->quote($d['designation'], PDO::PARAM_INT).", 
 										".$connexion->quote($d['note'], PDO::PARAM_INT).", 
-										'".$connexion->quote($d['commentaire'], PDO::PARAM_STR)."'
+										".$connexion->quote($d['commentaire'], PDO::PARAM_STR)."
 										)");
         }
-        catch(Exception $e) {
-            $errors[] = array($e->getMessage()=>$e->getCode());
-        }
-        if ($update == 0) {
-            try {
-                $create = $connexion->exec("INSERT INTO `competences_users`(users_id, designation_id, note, commentaire) 
-											VALUES(".$connexion->quote($d['user'], PDO::PARAM_INT).", 
-											".$connexion->quote($d['designation'], PDO::PARAM_INT).", 
-											".$connexion->quote($d['note'], PDO::PARAM_INT).", 
-											'".$connexion->quote($d['commentaire'], PDO::PARAM_STR)."'
-											)");
-            }
-            catch(Exception $e) {
-                $errors[] = array($e->getMessage()=>$e->getCode());
-            }
-        }
     }
-    return ($errors);
 }
 ?>

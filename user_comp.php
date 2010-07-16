@@ -62,8 +62,8 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
         }
     }
     
-    // Envoi en bdd et récupération du nombre d'erreurs
-    $prb = update_user($post);
+    // Envoi en bdd
+    update_user($post);
     
 ?>
  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -79,9 +79,7 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
     </head>
     <body>
         <div id="container">
-			<pre><?= print_r($prb) ?></pre>
-			<pre><?= print_r($post) ?></pre>
-			<? foreach ($donnees as $d): ?>
+        	<? foreach ($donnees as $d): ?>
 	        <? if (isset($cat) && $cat != $d->categorie): //Gestion des catégories ?>
 	        	</table>
 			</fieldset>
