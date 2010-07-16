@@ -55,7 +55,7 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
     // Création du tableau des donnees
     $post = array();
     foreach ($designations as $d) {
-    	if ($d->commentaire=="") {
+    	if ($d->commentaire==NULL) {
     		$d->commentaire=" ";
     	}
         if (isset($_POST[$d->designation])) {
