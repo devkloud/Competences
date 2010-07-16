@@ -43,8 +43,8 @@ if ($action == 'delete' && isset($id)) {
 	$id=$connexion->quote($id, PDO::PARAM_INT);
 	$sql="SELECT * FROM competences_categories WHERE id=".$id." ORDER BY competences_categories.nom ASC";
 	$query=$connexion->query($sql);
-	$cat=$query->fetchAll(PDO::FETCH_ASSOC);
-	if (isset($cat[0])) {
+	$array=$query->fetchAll(PDO::FETCH_ASSOC);
+	if (isset($array[0])) {
 		$sql = "DELETE FROM `competences_categories` WHERE id=".$id;
 		if ($connexion->exec($sql)) {
 			$deleted = TRUE;
@@ -54,8 +54,33 @@ if ($action == 'delete' && isset($id)) {
 	} else {
 		$deleted = FALSE;
 	}
+	$query->closeCursor();
 }
 
+/* Edition d'une catégorie */
+if ($action == 'edit' && isset($id) && isset($_POST['submit']) && isset($_POST['cat'])) {
+	$cat=$connexion->quote($_POST['cat'], PDO::PARAM_STR);
+	$id=$connexion->quote($id, PDO::PARAM_INT);
+	$sql="SELECT * FROM `competences_categories` WHERE id=".$id;
+	$query=$connexion->query($sql);
+	$array=$query->fetchAll(PDO::FETCH_ASSOC);
+	if (isset($array[0])) {
+		$sql="UPDATE `competences_categories` SET nom=".$cat." WHERE id=".$id;
+		if ($connexion->query($sql)) {
+			$edited=TRUE;
+		} else {
+			$edited=FALSE;
+		}
+	}else {
+    	$edited=FALSE;
+    }
+	$query->closeCursor();
+} elseif ($action == 'edit' && isset($id) && !isset($_POST['submit']) && !isset($_POST['cat'])) {
+	$sql="SELECT nom FROM `competences_categories` WHERE id=".$id;
+	$query=$connexion->query($sql);
+	$nom=$query->fetch();
+	$query->closeCursor();
+}
 ?>
  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
@@ -93,24 +118,39 @@ if ($action == 'delete' && isset($id)) {
             </table>
             <? elseif ($action == 'delete' && isset($deleted)): ?>
 				<? if($deleted == TRUE): ?>
-				<p>La catégorie <?= $cat[0]['nom'] ?> à bien été supprimée !</p>
+					<p>La catégorie <?= $cat[0]['nom'] ?> à bien été supprimée !</p>
 				<? else: ?>
-				<p>La catégorie n'a pas été supprimée !</p>
+					<p>La catégorie n'a pas été supprimée !</p>
 				<? endif; ?>
+				<a href="?a=index">Retour aux catégories</a>
             <? elseif ($action == 'new'): ?>
 				<? if (isset($created) && $created==TRUE):?>
-				<p>La catégorie <?= $cat ?> à bien été crée !</p>
-				<? else: ?>
-				<p>La catégorie <?= $cat ?> n'a pas été crée !</p>
+					<p>La catégorie <?= $cat ?> à bien été crée !</p>
+				<? elseif (isset($created) && $created==FALSE): ?>
+					<p>La catégorie <?= $cat ?> n'a pas été crée !</p>
 				<? endif; ?>
-			<form id="new" method="post">
-				<fieldset>
-					<legend>Nouvelle catégorie</legend>
-					<input type="text" name="cat" />
-					<input type="submit" name="submit" value="Créer" />
-				</fieldset>
-			</form>
-			<a href="?a=index">Retour aux catégories</a>
+				<form id="new" method="post">
+					<fieldset>
+						<legend>Nouvelle catégorie</legend>
+						<input type="text" name="cat" />
+						<input type="submit" name="submit" value="Editer" />
+					</fieldset>
+				</form>
+				<a href="?a=index">Retour aux catégories</a>
+			<? elseif ($action == 'edit' && isset($id)): ?>
+				<? if (isset($edited) && $edited==TRUE):?>
+					<p>La catégorie <?= $cat ?> à bien été éditée !</p>
+				<? elseif (isset($edited) && $edited==FALSE): ?>
+					<p>La catégorie <?= $cat ?> n'a pas été éditée !</p>
+				<? endif; ?>
+				<form id="edit" method="post">
+					<fieldset>
+						<legend>Edition de catégorie</legend>
+						<input type="text" name="cat" value="<?= $nom[0] ?>" />
+						<input type="submit" name="submit" value="Créer" />
+					</fieldset>
+				</form>
+				<a href="?a=index">Retour aux catégories</a>
             <? endif; ?>
         </div>
     </body>
