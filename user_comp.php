@@ -56,22 +56,14 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
     $post = array();
     foreach ($designations as $d) {
         if (isset($_POST[$d->designation])) {
-            $post[] = array('user' => $pun_user['id'], 
-							'designation' => $d->id, 
-							'note' => $_POST[$d->designation], 
-							'commentaire' => $_POST[$d->designation.'_commentaire']
-							);
+            $post[] = array('user'=>$pun_user['id'], 'designation'=>$d->id, 'note'=>$_POST[$d->designation], 'commentaire'=>$_POST[$d->designation.'_commentaire']);
         } else {
-            $post[] = array('user' => $pun_user['id'], 
-							'designation' => $d->id, 
-							'note' => 0, 
-							'commentaire' => $_POST[$d->designation.'_commentaire']
-							);
+            $post[] = array('user'=>$pun_user['id'], 'designation'=>$d->id, 'note'=>0, 'commentaire'=>$_POST[$d->designation.'_commentaire']);
         }
     }
     
-    // Envoi en bdd
-    update_user($post);
+    // Envoi en bdd et récupération du nombre d'erreurs
+    $prb = update_user($post);
     
 ?>
  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -87,23 +79,25 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
     </head>
     <body>
         <div id="container">
-        <? foreach ($donnees as $d): ?>
-        <? if (isset($cat) && $cat != $d->categorie): //Gestion des catégories ?>
-        </table>
-    </fieldset>
-    <fieldset>
-        <legend>
-            <?= $d->categorie ?>
-        </legend>
-        <table>
-            <? elseif (!isset($cat)): ?>
-            <fieldset>
-                <legend>
-                    <?= $d->categorie?>
-                </legend>
-                <table>
-                    <?endif ; //endGestion des catégories ?>
-                    <tr>
+			<pre><?= print_r($prb) ?></pre>
+			<pre><?= print_r($post) ?></pre>
+			<? foreach ($donnees as $d): ?>
+	        <? if (isset($cat) && $cat != $d->categorie): //Gestion des catégories ?>
+	        	</table>
+			</fieldset>
+			<fieldset>
+				<legend>
+	            <?= $d->categorie?>
+			    </legend>
+	        	<table>
+	            <? elseif (!isset($cat)): ?>
+			<fieldset>
+				<legend>
+	                    <?= $d->categorie?>
+	       		</legend>
+	       		<table>
+			<?endif ; //endGestion des catégories ?>
+					<tr>
                         <td>
                             <?= $d->designation?>
                         </td>
@@ -111,7 +105,7 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
                             <? for ($i = 1; $i < 6; $i++): ?>
                             <input type="radio" name="<?= $d->designation ?>" value="<?= $i ?>" class="star" disabled="true"
                             <? if ($i == $_POST[$d->designation]): ?>
-checked="checked"
+ checked="checked"
                             <? endif; ?>
                             />
                             <? endfor; ?>
@@ -119,17 +113,16 @@ checked="checked"
                         <td>
                             <input type="text" name="<?= $d->designation.'.commentaire' ?>" disabled="true"
                             <? if ($_POST[$d->designation.'_commentaire']): ?>
-value="<?= $_POST[$d->designation.'_commentaire'] ?>"
+ value="<?= $_POST[$d->designation.'_commentaire'] ?>"
                             <? endif; ?>
                             />
                         </td>
-                    </tr>
+					</tr>
                     <? $cat = $d->categorie; ?>
-                    <? endforeach; ?>
+			<? endforeach; ?>
                 </table>
             </fieldset>
-			<pre><? print_r($designations); print_r($post); ?></pre>
-            </div>
+		</div>
 	</body>
 </html>
 <?php } ?>
