@@ -35,6 +35,7 @@ tr.odd {
 		<li><a href="login.php" title="Connexion">Connectez-vous pour ajouter ou modifier vos compétences.<a></li>
 		<? if ($pun_user['group_id'] == 1 || $pun_user['group_id'] == 2 || $pun_user['group_id'] == 11): ?>
 			<li><a href="categorie.php" title="Catégories">Gérer les catégories</a></li>
+			<li><a href="designation.php" title="Désignations">Gérer les désignations</a></li>
 		<? endif; ?>
 	</ul>
 <table id="competences">
