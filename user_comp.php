@@ -55,6 +55,9 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
     // Création du tableau des donnees
     $post = array();
     foreach ($designations as $d) {
+    	if ($d->commentaire=="") {
+    		$d->commentaire=" ";
+    	}
         if (isset($_POST[$d->designation])) {
             $post[] = array('user'=>$pun_user['id'], 'designation'=>$d->id, 'note'=>$_POST[$d->designation], 'commentaire'=>$_POST[$d->designation.'_commentaire']);
         } else {
@@ -120,6 +123,7 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
 			<? endforeach; ?>
                 </table>
             </fieldset>
+			<a href="index.php" title="Accueil">Retour au tableau des compétences</a>
 		</div>
 	</body>
 </html>
