@@ -59,9 +59,9 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
     	}
         if (isset($_POST[$d->designation])) {
             $post[] = array('user'=>$pun_user['id'], 'designation'=>$d->id, 'note'=>$_POST[$d->designation], 'commentaire'=>$_POST[$d->designation.'_commentaire']);
-        } /*else {
+        } else {
         	$post[] = array('user'=>$pun_user['id'], 'designation'=>$d->id, 'note'=>0, 'commentaire'=>$_POST[$d->designation.'_commentaire']);
-        }*/
+        }
     }
     print_r($post);
     // Envoi en bdd

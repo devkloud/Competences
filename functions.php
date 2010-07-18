@@ -41,15 +41,16 @@ function update_user($donnees) {
 		if ($array[0] > 0) {
 			if ($d['note'] == 0) {
 				$sql="DELETE FROM `competences_users` WHERE users_id=".$connexion->quote($d['user'], PDO::PARAM_INT)." AND designation_id=".$connexion->quote($d['designation'], PDO::PARAM_INT);
+				$connexion->exec($sql);
 			} else {
 	    		$sql="UPDATE `competences_users` SET note=".$connexion->quote($d['note'], PDO::PARAM_INT).", commentaire=".$connexion->quote($d['commentaire'], PDO::PARAM_STR)." WHERE users_id=".$connexion->quote($d['user'], PDO::PARAM_INT)." AND designation_id=".$connexion->quote($d['designation'], PDO::PARAM_INT);
+				$connexion->query($sql);
 			}
-			$connexion->query($sql);
-		}else {
+		} else {
 			if ($d['note'] > 0) {
 				$sql="INSERT INTO `competences_users`(users_id, designation_id, note, commentaire) VALUES(".$connexion->quote($d['user'], PDO::PARAM_INT).", ".$connexion->quote($d['designation'], PDO::PARAM_INT).", ".$connexion->quote($d['note'], PDO::PARAM_INT).", ".$connexion->quote($d['commentaire'], PDO::PARAM_STR).")";
+				$connexion->exec($sql);
 			}
-            $connexion->exec($sql);
         }
     }
 }
