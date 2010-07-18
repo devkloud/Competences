@@ -1,15 +1,35 @@
 ﻿<?php
+$index = true; 
+
 // Inclusion de fluxbb
+ini_set('display_errors','Off');
 define('PUN_ROOT', '../home/');
 require PUN_ROOT.'include/common.php';
 
-// Redéfinition des variables
-$donnees = array();
-$cat_indent = 0;
 
 // Récupération et traitement des données
-$index = true;
-require_once ('data.php');
+  // Configuration et connexion MySql
+  require 'config.php';
+  
+  // Définition des variables
+  $donnees = array();
+  
+  // Récupération des désignation
+  $noms = $connexion->query("SELECT users.id,
+	users.username,
+	competences_categories.nom AS categorie,
+	competences_designation.designation,
+	competences_users.note,
+	competences_users.commentaire
+	FROM `competences_users`
+	RIGHT JOIN `users` ON users.id=competences_users.users_id
+	LEFT JOIN `competences_designation` ON competences_designation.id=competences_users.designation_id
+	LEFT JOIN `competences_categories` ON competences_categories.id=competences_designation.categories_id
+	WHERE users.id != 1
+	ORDER BY users.id,competences_categories.nom ASC"); // Récupération des infos
+  $noms->setFetchMode(PDO::FETCH_OBJ); // Transformation en objet
+  $donnees = $noms->fetchAll(); // Traitement de l'objet
+  $noms->closeCursor(); // Fermeture
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
@@ -32,7 +52,9 @@ tr.odd {
 <body>
 <div id="container">
 	<ul>
-		<li><a href="login.php" title="Connexion">Connectez-vous pour ajouter ou modifier vos compétences.<a></li>
+		<? if ($pun_user['is_guest']): ?>
+			<li><a href="login.php" title="Connexion">Connectez-vous pour ajouter ou modifier vos compétences.<a></li>
+		<? endif; ?>
 		<? if ($pun_user['group_id'] == 1 || $pun_user['group_id'] == 2 || $pun_user['group_id'] == 11): ?>
 			<li><a href="categorie.php" title="Catégories">Gérer les catégories</a></li>
 			<li><a href="designation.php" title="Désignations">Gérer les désignations</a></li>
