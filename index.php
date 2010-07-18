@@ -54,6 +54,8 @@ tr.odd {
 	<ul>
 		<? if ($pun_user['is_guest']): ?>
 			<li><a href="login.php" title="Connexion">Connectez-vous pour ajouter ou modifier vos compétences.<a></li>
+		<? else: ?>
+			<li><a href="user.php" title="Compétences">Ajoutez ou modifiez vos compétences.<a></li>
 		<? endif; ?>
 		<? if ($pun_user['group_id'] == 1 || $pun_user['group_id'] == 2 || $pun_user['group_id'] == 11): ?>
 			<li><a href="categorie.php" title="Catégories">Gérer les catégories</a></li>
