@@ -42,8 +42,7 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
     $noms->closeCursor(); // Fermeture
     
     // Récupération des désignation
-    $noms = $connexion->query("SELECT competences_designation.id,
-	competences_designation.designation
+    $noms = $connexion->query("SELECT id, designation
 	FROM `competences_designation`
 	ORDER BY competences_designation.id ASC"); // Récupération des infos
     $noms->setFetchMode(PDO::FETCH_OBJ); // Transformation en objet
@@ -60,9 +59,11 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
     	}
         if (isset($_POST[$d->designation])) {
             $post[] = array('user'=>$pun_user['id'], 'designation'=>$d->id, 'note'=>$_POST[$d->designation], 'commentaire'=>$_POST[$d->designation.'_commentaire']);
-        }
+        } /*else {
+        	$post[] = array('user'=>$pun_user['id'], 'designation'=>$d->id, 'note'=>0, 'commentaire'=>$_POST[$d->designation.'_commentaire']);
+        }*/
     }
-    
+    print_r($post);
     // Envoi en bdd
     update_user($post);
     

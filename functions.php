@@ -34,15 +34,22 @@ function note($des) {
 function update_user($donnees) {
     global $connexion;
     foreach ($donnees as $d) {
-    	$sql="SELECT * FROM `competences_users` WHERE users_id=".$connexion->quote($d['user'], PDO::PARAM_INT)." AND designation_id=".$connexion->quote($d['designation'], PDO::PARAM_INT);
-		$select=$connexion->query($sql);
-		$array=$select->fetchAll(PDO::FETCH_ASSOC);
-		if (isset($array[0])) {
-    		$sql="UPDATE `competences_users` SET note=".$connexion->quote($d['note'], PDO::PARAM_INT).", commentaire=".$connexion->quote($d['commentaire'], PDO::PARAM_STR)." WHERE users_id=".$connexion->quote($d['user'], PDO::PARAM_INT)." AND designation_id=".$connexion->quote($d['designation'], PDO::PARAM_INT);
-        	$update=$connexion->query($sql);
+    	$sql="SELECT COUNT(*) FROM `competences_users` 
+			  WHERE users_id=".$connexion->quote($d['user'], PDO::PARAM_INT)." 
+			  AND designation_id=".$connexion->quote($d['designation'], PDO::PARAM_INT);
+		$array=$connexion->query($sql)->fetch();
+		if ($array[0] > 0) {
+			if ($d['note'] == 0) {
+				$sql="DELETE FROM `competences_users` WHERE users_id=".$connexion->quote($d['user'], PDO::PARAM_INT)." AND designation_id=".$connexion->quote($d['designation'], PDO::PARAM_INT);
+			} else {
+	    		$sql="UPDATE `competences_users` SET note=".$connexion->quote($d['note'], PDO::PARAM_INT).", commentaire=".$connexion->quote($d['commentaire'], PDO::PARAM_STR)." WHERE users_id=".$connexion->quote($d['user'], PDO::PARAM_INT)." AND designation_id=".$connexion->quote($d['designation'], PDO::PARAM_INT);
+			}
+			$connexion->query($sql);
 		}else {
-        	$sql="INSERT INTO `competences_users`(users_id, designation_id, note, commentaire) VALUES(".$connexion->quote($d['user'], PDO::PARAM_INT).", ".$connexion->quote($d['designation'], PDO::PARAM_INT).", ".$connexion->quote($d['note'], PDO::PARAM_INT).", ".$connexion->quote($d['commentaire'], PDO::PARAM_STR).")";
-            $create=$connexion->exec($sql);
+			if ($d['note'] > 0) {
+				$sql="INSERT INTO `competences_users`(users_id, designation_id, note, commentaire) VALUES(".$connexion->quote($d['user'], PDO::PARAM_INT).", ".$connexion->quote($d['designation'], PDO::PARAM_INT).", ".$connexion->quote($d['note'], PDO::PARAM_INT).", ".$connexion->quote($d['commentaire'], PDO::PARAM_STR).")";
+			}
+            $connexion->exec($sql);
         }
     }
 }
