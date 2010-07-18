@@ -63,7 +63,6 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
         	$post[] = array('user'=>$pun_user['id'], 'designation'=>$d->id, 'note'=>0, 'commentaire'=>$_POST[$d->designation.'_commentaire']);
         }
     }
-    print_r($post);
     // Envoi en bdd
     update_user($post);
     

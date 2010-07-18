@@ -152,6 +152,7 @@ if ($action == 'edit' && isset($id) && isset($_POST['submit']) && isset($_POST['
 				</form>
 				<a href="?a=index">Retour aux catégories</a>
             <? endif; ?>
+			<a href="index.php" title="Accueil">Retour au tableau des compétences</a>
         </div>
     </body>
 </html>

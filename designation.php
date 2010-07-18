@@ -238,6 +238,7 @@ if ($pun_user['is_guest'] == 1) { // L'utilisateur n'est pas connecté
                 </fieldset>
             </form><a href="?a=index">Retour aux désignations</a>
             <? endif; ?>
+			<a href="index.php" title="Accueil">Retour au tableau des compétences</a>
         </div>
     </body>
 </html>
